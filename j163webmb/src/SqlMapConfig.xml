@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 引入properties文件 -->
+	<properties resource="config.properties"/>
+	
+	<!-- 给UserBean起别名 -->
+	<typeAliases>
+<!-- 		<typeAlias alias="user" type="com.lovo.j163mybatis.bean.UserBean"/> -->
+		<package name="com.lovo.j163mybatis.bean"/>
+	</typeAliases>
+	
+
+	<!-- 可配置多个数据库环境 default的意思表示默认使用哪一个 -->
+	<environments default="development">
+		<!-- 配置每个数据库环境 -->
+		<environment id="development">
+			<!-- type的值: JDBC  MANAGED -->
+			<transactionManager type="JDBC"/>
+			<!-- type的值: POOLED UNPOOLED JNDI -->
+			<dataSource type="POOLED">
+				<!-- <property name="driver" value="com.mysql.jdbc.Driver"/>
+				<property name="url" value="jdbc:mysql://127.0.0.1:3306/test?characterEncoding=utf8"/>
+				<property name="username" value="root"/>
+				<property name="password" value="lovo"/> -->
+				<!-- 通过properties文件里面的键值设置value值 -->
+				<property name="driver" value="${driverClass}"/>
+				<property name="url" value="${dbURL}"/>
+				<property name="username" value="${username}"/>
+				<property name="password" value="${password}"/>
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<!-- 注册映射文件 -->
+	<mappers>
+		<mapper resource="com/lovo/j163mybatis/bean/UserBeanMapper.xml"/>
+	</mappers>
+	
+</configuration>  
+  

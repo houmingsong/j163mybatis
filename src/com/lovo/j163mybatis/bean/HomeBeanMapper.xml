@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lovo.j163mybatis.mapper.HomeMapper">
+
+	<resultMap id="homeRM" type="homeBean">
+		<id property="id" column="home_id"/>
+		<result property="address" column="f_address"/>
+		<association property="lockBean" javaType="lockBean" column="home_id" select="getLockById"></association>
+	</resultMap>
+	
+	<resultMap id="lockRM" type="lockBean">
+		<id property="id" column="lock_id"/>
+		<result property="type" column="f_type"/>
+	</resultMap>
+
+	<select id="getHomeById" resultMap="homeRM">
+		select * from t_home where home_id=#{homeID}
+	</select>
+	
+	<select id="getLockById" resultMap="lockRM">
+		select * from t_lock where fk_home_id = #{lockId}
+	</select>
+	
+	<select id="getAllHome" resultMap="homeRM">
+		select * from t_home
+	</select>
+</mapper>

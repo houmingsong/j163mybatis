@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lovo.j163mybatis.mapper.UserMapper">
+	
+	<!-- 配置映射关系（表中的列与JAVABEAN属性的映射） -->
+	<resultMap id="userRM" type="userBean">
+		<id property="id" column="pk_id"/>	
+		<result property="username" column="f_username"/>
+		<result property="password" column="f_password"/>
+		<result property="account" column="f_account"/>
+	</resultMap>
+
+<!-- 	<insert id="addUser" parameterType="com.lovo.j163mybatis.bean.UserBean"> -->
+<!-- 	<insert id="addUser" parameterType="user"> -->
+    <insert id="addUser" parameterType="userBean">
+		insert into t_163_user values (null, #{username}, #{password}, #{account})
+	</insert>
+	
+	<delete id="deleteUserById" parameterType="int">
+		delete from t_163_user where pk_id=#{userId}
+	</delete>
+	
+	<update id="updateUserNameById">
+		update t_163_user set f_username=#{param1} where pk_id=#{param2}
+	</update>
+	
+	<select id="getAllUsers" resultMap="userRM">
+		select * from t_163_user
+	</select>
+	
+	<!-- <select id="getUserById" parameterType="int" resultMap="userRM">
+		select * from t_163_user where pk_id=#{userId}
+	</select> -->
+	
+	<!-- 自动映射（不推荐使用） -->
+	<select id="getUserById" parameterType="int" resultType="userBean">
+		select 
+			pk_id id,
+			f_username username,
+			f_password password,
+			f_account account
+		 from t_163_user where pk_id=#{userId}
+	</select>
+	
+	<select id="getAllUsersByCondition" parameterType="map" resultMap="userRM">
+		select * from t_163_user where f_username = #{username} and f_account = #{account}
+	</select>
+	
+	<select id="getAllUsersByName" parameterType="string" resultMap="userRM">
+		select * from t_163_user where f_username like "%"#{name}"%"
+	</select>
+	
+</mapper>

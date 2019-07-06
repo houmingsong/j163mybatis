@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lovo.j163mybatis.mapper.PetMapper">
+
+	<resultMap id="petRM" type="petBean">
+		<id property="id" column="pet_id"/>
+		<result property="name" column="f_name"/>
+		<!-- 鉴别器 -->
+		<discriminator javaType="string" column="f_type">
+			<case value="cat" resultType="catBean">
+				<result property="fishNum" column="f_fishNum"/>
+				<result property="mouseNum" column="f_mouseNum"/>
+			</case>
+			<case value="dog" resultType="dogBean">
+				<result property="boneNum" column="f_boneNum"/>
+			</case>
+			<case value="duck" resultType="duckBean">
+				<result property="fishNum" column="f_fishNum"/>
+			</case>
+		</discriminator>
+	</resultMap>
+
+	<select id="getPetById" resultMap="petRM">
+		select * from t_pet where pet_id = #{petId}
+	</select>
+</mapper>
